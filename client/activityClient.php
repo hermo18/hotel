@@ -151,38 +151,44 @@ session_start();
 
                 </tr>
             </thead>
-            <?php
+            <tbody>
+                <?php
 
-            while ($row = $stmt2->fetch()) {
-            ?>
-                <tbody>
+                while ($row = $stmt2->fetch()) {
+                ?>
+
                     <tr>
-                        <td><?php $row["name"] ?></td>
-                        <td><?php $row["day"] ?></td>
-                        <td><?php $row["nPeople"] ?></td>
+
+
+                        <td><?php echo $row["name"]; ?></td>
+                        <td><?php echo $row["day"]; ?></td>
+                        <td><?php echo $row["nPeople"]; ?></td>
                     </tr>
-                </tbody>
+
+                <?php
+                }
+                ?>
+            </tbody>
         </table>
-    <?php
+        <?php
+
+        desconectar($dbh);
+
+        ?>
+
+
+
+        <?php
+        if (isset($_SESSION['user'])) {
+            if ($_SESSION['type'] == 4) {
+                # code...
+            } else {
+                header('Location: admin.php');
             }
-
-            desconectar($dbh);
-
-    ?>
-
-
-
-    <?php
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['type'] == 4) {
-            # code...
         } else {
-            header('Location: admin.php');
+            header('Location: login.php');
         }
-    } else {
-        header('Location: login.php');
-    }
-    ?>
+        ?>
 
 
 </body>
