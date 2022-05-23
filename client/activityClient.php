@@ -36,7 +36,7 @@ session_start();
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="admin.php"><i class="bi bi-moon"></i> USER: <?php echo $_SESSION["id"] ?></a>
+        <a href="client.php"><i class="bi bi-moon"></i> USER: <?php echo $_SESSION["id"] ?></a>
         <br>
         <br>
         <br>
@@ -73,18 +73,19 @@ session_start();
                         <div class="form-group">
                             <select name="activityName" class="form-select">
                                 <option selected>Select an activity</option>
-                                <option value="1" selected>Motorboard</option>
+                                <option value="1">Motorboard</option>
                                 <option value="2">Paintball</option>
                                 <option value="3">Karts</option>
                             </select>
                             <br>
-                            <input type="date" name="dateBook">
+                            <input type="date" name="dateBook" required>
                             <script type='text/javascript'>
                                 var today = new Date().toISOString().split('T')[0];
                                 document.getElementsByName("dateBook")[0].setAttribute('min', today);
                             </script>
                             <br>
-                            input:
+                            <br>
+                            <input type="number" name="people" class="form-control" placeholder=" Number of people:">
                         </div>
 
                 </div>
@@ -133,22 +134,55 @@ session_start();
 
         desconectar($dbh);
 
+        $dbh = conectar("hotel", "root", "");
+
+        $stmt2 = $dbh->prepare("select name, day, nPeople from booking_activities inner join activities on booking_activities.id_activity=activities.id_activity where id_user=? order by day ASC");
+        $stmt2->bindParam(1, $_SESSION["id"]); //checks email
+        $stmt2->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt2->execute();
 
         ?>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">NAME</th>
+                    <th scope="col">DAY</th>
+                    <th scope="col">PEOPLE</th>
 
+                </tr>
+            </thead>
+            <?php
 
-
-        <?php
-        if (isset($_SESSION['user'])) {
-            if ($_SESSION['type'] == 4) {
-                # code...
-            } else {
-                header('Location: admin.php');
+            while ($row = $stmt2->fetch()) {
+            ?>
+                <tbody>
+                    <tr>
+                        <td><?php $row["name"] ?></td>
+                        <td><?php $row["day"] ?></td>
+                        <td><?php $row["nPeople"] ?></td>
+                    </tr>
+                </tbody>
+        </table>
+    <?php
             }
+
+            desconectar($dbh);
+
+    ?>
+
+
+
+    <?php
+    if (isset($_SESSION['user'])) {
+        if ($_SESSION['type'] == 4) {
+            # code...
         } else {
-            header('Location: login.php');
+            header('Location: admin.php');
         }
-        ?>
+    } else {
+        header('Location: login.php');
+    }
+    ?>
 
 
 </body>
