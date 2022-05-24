@@ -32,7 +32,11 @@ session_start();
 </head>
 
 <body>
-
+<script>
+    function DeleteConfirm() {
+      confirm("Are you sure to delete the activity?");
+     }
+ </script>
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -85,7 +89,7 @@ session_start();
                             </script>
                             <br>
                             <br>
-                            <input type="number" name="people" class="form-control" placeholder=" Number of people:">
+                            <input type="number" name="people" class="form-control" placeholder=" Number of people:" min=1 max=5>
                         </div>
 
                 </div>
@@ -136,7 +140,7 @@ session_start();
 
         $dbh = conectar("hotel", "root", "");
 
-        $stmt2 = $dbh->prepare("select name, day, nPeople from booking_activities inner join activities on booking_activities.id_activity=activities.id_activity where id_user=? order by day ASC");
+        $stmt2 = $dbh->prepare("select id_booking, name, day, nPeople from booking_activities inner join activities on booking_activities.id_activity=activities.id_activity where id_user=? order by day ASC");
         $stmt2->bindParam(1, $_SESSION["id"]); //checks email
         $stmt2->setFetchMode(PDO::FETCH_ASSOC);
         $stmt2->execute();
@@ -163,6 +167,7 @@ session_start();
                         <td><?php echo $row["name"]; ?></td>
                         <td><?php echo $row["day"]; ?></td>
                         <td><?php echo $row["nPeople"]; ?></td>
+                        <td><a class="btn btn-danger" onclick="DeleteConfirm()" href="deleteActivity.php?id=<?php echo $row['id_booking']; ?>">X</a></td>
                     </tr>
 
                 <?php
