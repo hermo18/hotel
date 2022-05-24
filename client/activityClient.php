@@ -44,10 +44,10 @@ session_start();
         <br>
         <br>
         <br>
-        <a href="#"><i class="bi- bi-people"></i> USERS</a>
+        <br>
         <b><a href="#">ACTIVITIES</a></b>
         <a href="#">BOOKINGS</a>
-        <a href="profileClient.php">PROFILE</a>
+        <b><a href="profileClient.php">PROFILE</a></b>
         <br>
         <br>
         <br>

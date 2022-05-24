@@ -138,7 +138,7 @@ session_start();
             echo "<script>alert('NOMBRE DE USUARIO O CONTRASEÑA NO VALIDO')</script>";
         } else {
             echo "entra";
-            $stmt = $dbh->prepare("select password, type_user, id_user from users where email=?");
+            $stmt = $dbh->prepare("select * from users where email=?");
             $stmt->bindParam(1, $_POST["user"]);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $stmt->execute();
@@ -147,6 +147,12 @@ session_start();
                     $_SESSION["user"] = $_POST["user"];
                     $_SESSION["type"] = $row["type_user"];
                     $_SESSION["id"] = $row["id_user"];
+                    $_SESSION["dni"] = $row["dni"];
+                    $_SESSION["phone"] = $row["phone"];
+                    $_SESSION["email"] = $row["email"];
+                    $_SESSION["first"] = $row["first_name"];
+                    $_SESSION["last"] = $row["last_name"];
+                    $_SESSION["password"] = $row["password"];
                     if ($_SESSION["type"] == 4) {
                         echo "<script>location='client/client.php';</script>";
                     } else {
