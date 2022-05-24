@@ -50,8 +50,10 @@ session_start();
 
     <div id="main">
         <button class="openbtn" onclick="openNav()"><i class="bi bi-list"></i></button>
-        <h2>Collapsed Sidebar</h2>
-        <p>Content...</p>
+        <br>
+        <br>
+        <h2>CREATE USER</h2>
+        <br><br>
         <form action="../registerUser.php" method="post">
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Email" name="email" required>

@@ -30,10 +30,9 @@ session_start();
     <br>
     <br>
     <br>
-    <a href="#"><i class="bi- bi-people"></i> USERS</a>
     <a href="activityClient.php">ACTIVITIES</a>
     <a href="#">BOOKINGS</a>
-    <a href="#">PROFILE</a>
+    <b><a href="#">PROFILE</a></b>
     <br>
     <br>
     <br>

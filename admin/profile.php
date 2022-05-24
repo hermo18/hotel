@@ -9,7 +9,7 @@ session_start();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>PROFILE</title>
 
   <link rel="stylesheet" href="adminStyle.css">
   <script src="adminJS.js"></script>
@@ -32,8 +32,8 @@ session_start();
     <br>
     <a href="#"><i class="bi- bi-people"></i> USERS</a>
     <a href="#">ROOMS</a>
-    <a href="#">BOOKINGS</a>
-    <b><a href="profile.php">PROFILE</a></b>
+    <a href="create.php">CREATE</a>
+    <a href="profile.php">PROFILE</a>
     <br>
     <br>
     <br>
@@ -50,17 +50,58 @@ session_start();
 
   <div id="main">
     <button class="openbtn" onclick="openNav()"><i class="bi bi-list"></i></button>
-    <h2>Collapsed Sidebar</h2>
-    <p>Content...</p>
-    
+    <br><br>
+    <h2>PROFILE</h2>
+    <br>
+    <br>
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <form action="../client/updateClient.php" method="post">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" value=<?php echo $_SESSION["email"] ?> name="email" required>
+          </div>
+          <br>
+          <div class="row">
+            <div class="form-group col-sm">
+              <input type="text" class="form-control" name="first_name" value=<?php echo $_SESSION["first"] ?> placeholder="First name" required>
+            </div>
+            <div class="form-group col-sm">
+              <input type="text" class="form-control" name="last_name" value=<?php echo $_SESSION["last"] ?> placeholder="Last name" required>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <input type="text" class="form-control" name="dni" placeholder="DNI" value=<?php echo $_SESSION["dni"] ?> minlength="9" maxlength="9" required disabled>
+          </div>
+          <br>
+          <div class="form-group">
+            <input type="text" class="form-control" name="phone" placeholder="Phone" value=<?php echo $_SESSION["phone"] ?> minlength="9" maxlength="9" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" value=<?php echo $_SESSION["password"] ?> placeholder="Password" minlength="6" maxlength="15" required>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
+        <button type="submit" class="btn btn-primary" name="submit">UPDATE</button>
+      </div>
+      </form>
+    </div>
+
   </div>
 
   <?php
-    if (isset($_SESSION['user'])) {
+  if (isset($_SESSION['user'])) {
+    if ($_SESSION['type'] == 1) {
       # code...
-    }else{
-      header('Location: login.php');
+    } else {
+      header('Location: admin.php');
     }
+  } else {
+    header('Location: login.php');
+  }
   ?>
 
 

@@ -9,7 +9,7 @@ session_start();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>ADMIN</title>
 
   <link rel="stylesheet" href="adminStyle.css">
   <script src="adminJS.js"></script>
@@ -50,8 +50,10 @@ session_start();
 
   <div id="main">
     <button class="openbtn" onclick="openNav()"><i class="bi bi-list"></i></button>
-    <h2>Collapsed Sidebar</h2>
-    <p>Content...</p>
+    <br>
+    <br>
+    <h2>ADMIN PORTAL</h2>
+    <br><br>
     <div class="row">
       <div class="col-sm-3">
         <div class="card">
