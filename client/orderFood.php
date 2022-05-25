@@ -45,10 +45,10 @@ session_start();
         <br>
         <br>
         <br>
-        <b><a href="#">ACTIVITIES</a></b>
+        <a href="activityClient.php">ACTIVITIES</a>
         <a href="#">BOOKINGS</a>
+        <b><a href="#">ORDER FOOD</a></b>
         <a href="profileClient.php">PROFILE</a>
-        <a href="orderFood.php">ORDER FOOD</a>
         <br>
         <br>
         <br>
@@ -68,46 +68,41 @@ session_start();
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">BOOK ACTIVITY</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ORDER FOOD</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="bookActivity.php" method="post">
+                    <form action="payFood.php" method="post">
                         <div class="form-group">
-                            <select name="activityName" class="form-select">
-                                <option selected>Select an activity</option>
-                                <option value="1">Motorboard</option>
-                                <option value="2">Paintball</option>
-                                <option value="3">Karts</option>
+                            <select name="foodName" class="form-select">
+                                <option selected>Select food</option>
+                                <option value="1">Burguer</option>
+                                <option value="2">Fish and chips</option>
+                                <option value="3">Paella</option>
+                                <option value="4">Chinese</option>
                             </select>
                             <br>
-                            <input type="date" name="dateBook" required>
-                            <script type='text/javascript'>
-                                var today = new Date().toISOString().split('T')[0];
-                                document.getElementsByName("dateBook")[0].setAttribute('min', today);
-                            </script>
-                            <br>
-                            <br>
-                            <input type="number" name="people" class="form-control" placeholder=" Number of people:" min=1 max=5>
+                            <input type="number" name="quantity" class="form-control" min=1 placeholder="Quantity">
+
                         </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit">BOOK</button>
+                    <button type="submit" class="btn btn-primary" name="submit">ORDER</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- MODAL -->
-
+    <img src="" alt="">
     <div id="main">
         <button class="openbtn" onclick="openNav()"><i class="bi bi-list"></i></button>
         <br><br>
-        <h2>BOOK ACTIVITIES</h2>
+        <h2>ORDER FOOD</h2>
         <br>
         <?php
         require("../db/db.php");
@@ -115,7 +110,7 @@ session_start();
 
         $dbh = conectar("hotel", "root", "");
 
-        $stmt = $dbh->prepare("select * from activities");
+        $stmt = $dbh->prepare("select * from food");
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
@@ -128,55 +123,71 @@ session_start();
             echo "<div class='card'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>{$row['name']}</h5>";
-            echo "<p>PRICE PP: {$row['price']}€</p>";
-            echo "<p>DURATION: {$row['timeMinutes']} minutes</p>";
-            echo '<input type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" value="BOOK">';
+            echo "<p>PRICE: {$row['price']}€</p>";
+            echo "<img src='{$row['photo']}' width='70%'>";
+            echo "<br>";
+            echo "<br>";
+            echo '<input type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" value="ORDER">';
             echo "</div>";
             echo "</div>";
             echo " </div>";
         }
         echo "</div>";
+        echo "<br>";
+        echo "<br>";
 
         desconectar($dbh);
 
         $dbh = conectar("hotel", "root", "");
 
-        $stmt2 = $dbh->prepare("select id_booking, name, day, nPeople, price from booking_activities inner join activities on booking_activities.id_activity=activities.id_activity where id_user=? order by day ASC");
+        $stmt2 = $dbh->prepare("select name, quantity, price, done from order_food inner join food on order_food.id_food = food.id_food where id_user=? order by done asc");
         $stmt2->bindParam(1, $_SESSION["id"]); //checks email
         $stmt2->setFetchMode(PDO::FETCH_ASSOC);
         $stmt2->execute();
 
         ?>
+        <h3>ORDERS</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">NAME</th>
-                    <th scope="col">DAY</th>
-                    <th scope="col">PEOPLE</th>
-                    <th scope="col">PRICE PP</th>
-
+                    <th scope="col">QUANTITY</th>
+                    <th scope="col">PRICE</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
 
                 while ($row = $stmt2->fetch()) {
+                    if ($row["done"] == 1) {
                 ?>
+                        <tr class="table-success">
+                            <td><?php echo $row["name"]; ?></td>
+                            <td><?php echo $row["quantity"]; ?></td>
+                            <td><?php echo $row["price"] * $row["quantity"] . "€"; ?></td>
+                        </tr>
+                    <?php
+                    } else {
 
-                    <tr>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["day"]; ?></td>
-                        <td><?php echo $row["nPeople"]; ?></td>
-                        <td><?php echo $row["price"] * $row["nPeople"] . "€"; ?></td>
-                        <td><a class="btn btn-danger" onclick="DeleteConfirm()" href="deleteActivity.php?id=<?php echo $row['id_booking']; ?>">X</a></td>
-                    </tr>
+
+                    ?>
+
+                        <tr>
+                            <td><?php echo $row["name"]; ?></td>
+                            <td><?php echo $row["quantity"]; ?></td>
+                            <td><?php echo $row["price"] * $row["quantity"] . "€"; ?></td>
+
+                        </tr>
 
                 <?php
+                    }
                 }
                 ?>
             </tbody>
         </table>
         <?php
+
+
 
         desconectar($dbh);
 

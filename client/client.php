@@ -26,13 +26,13 @@ session_start();
 <body>
   <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="admin.php"><i class="bi bi-moon"></i> USER: <?php echo $_SESSION["id"] ?></a>
+    <a href="client.php"><i class="bi bi-moon"></i> USER: <?php echo $_SESSION["id"] ?></a>
     <br>
     <br>
     <br>
-    <a href="#"><i class="bi- bi-people"></i> USERS</a>
     <a href="activityClient.php">ACTIVITIES</a>
     <a href="#">BOOKINGS</a>
+    <a href="orderFood.php">ORDER FOOD</a>
     <a href="profileClient.php">PROFILE</a>
     <br>
     <br>
