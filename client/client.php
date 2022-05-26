@@ -31,7 +31,7 @@ session_start();
     <br>
     <br>
     <a href="activityClient.php">ACTIVITIES</a>
-    <a href="#">BOOKINGS</a>
+    <a href="roomClient.php">BOOKINGS</a>
     <a href="orderFood.php">ORDER FOOD</a>
     <a href="profileClient.php">PROFILE</a>
     <br>
