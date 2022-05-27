@@ -50,8 +50,46 @@ session_start();
 
   <div id="main">
     <button class="openbtn" onclick="openNav()"><i class="bi bi-list"></i></button>
-    <h2>Collapsed Sidebar</h2>
-    <p>Content...</p>
+    <h2>CLIENT PORTAL</h2>
+    <br><br>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">ACTIVITIES</h5>
+            <a href="activityClient.php" class="btn btn-primary">Go</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">BOOKINGS</h5>
+            <a href="roomClient.php" class="btn btn-primary">Go</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">ORDER FOOD</h5>
+            <a href="orderFood.php" class="btn btn-primary">Go</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">PROFILE</h5>
+            <a href="profileClient.php" class="btn btn-primary">Go</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
     
   </div>
 
