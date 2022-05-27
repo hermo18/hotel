@@ -47,8 +47,8 @@ session_start();
         <br>
         <b><a href="#">ACTIVITIES</a></b>
         <a href="#">BOOKINGS</a>
-        <a href="profileClient.php">PROFILE</a>
         <a href="orderFood.php">ORDER FOOD</a>
+        <a href="profileClient.php">PROFILE</a>
         <br>
         <br>
         <br>

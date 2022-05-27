@@ -47,8 +47,8 @@ session_start();
         <br>
         <a href="activityClient.php">ACTIVITIES</a>
         <b><a href="#">BOOKINGS</a></b>
-        <a href="profileClient.php">PROFILE</a>
         <a href="orderFood.php">ORDER FOOD</a>
+        <a href="profileClient.php">PROFILE</a>
         <br>
         <br>
         <br>
@@ -119,7 +119,7 @@ session_start();
 
         $dbh = conectar("hotel", "root", "");
 
-        $stmt = $dbh->prepare("select * from activities");
+        $stmt = $dbh->prepare("SELECT t.name, floor(AVG(r.price)) as average FROM rooms as r INNER JOIN trooms as t on r.type_room=t.id_type group by r.type_room");
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
 
@@ -132,8 +132,7 @@ session_start();
             echo "<div class='card'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>{$row['name']}</h5>";
-            echo "<p>PRICE PP: {$row['price']}€</p>";
-            echo "<p>DURATION: {$row['timeMinutes']} minutes</p>";
+            echo "<p>AVERAGE PRICE: {$row['average']}€</p>";
             echo '<input type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" value="BOOK">';
             echo "</div>";
             echo "</div>";
@@ -145,19 +144,22 @@ session_start();
 
         $dbh = conectar("hotel", "root", "");
 
-        $stmt2 = $dbh->prepare("select id_booking, name, day, nPeople, price from booking_activities inner join activities on booking_activities.id_activity=activities.id_activity where id_user=? order by day ASC");
+        $stmt2 = $dbh->prepare("select id_booking, id_room, dateIn, dateOut from booking_room where id_user=? order by dateIn desc");
         $stmt2->bindParam(1, $_SESSION["id"]); //checks email
         $stmt2->setFetchMode(PDO::FETCH_ASSOC);
         $stmt2->execute();
 
         ?>
+        <br>
+        <h3>MY BOOKINGS</h3>
+        <br>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">NAME</th>
-                    <th scope="col">DAY</th>
-                    <th scope="col">PEOPLE</th>
-                    <th scope="col">PRICE PP</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">ROOM</th>
+                    <th scope="col">CHECK IN</th>
+                    <th scope="col">CHECK OUT</th>
 
                 </tr>
             </thead>
@@ -165,17 +167,27 @@ session_start();
                 <?php
 
                 while ($row = $stmt2->fetch()) {
+                    if ($row["dateOut"] < date("Y-m-d")) {
                 ?>
+                        <tr class="table-warning">
+                            <td><?php echo $row["id_booking"]; ?></td>
+                            <td><?php echo $row["id_room"]; ?></td>
+                            <td><?php echo $row["dateIn"]; ?></td>
+                            <td><?php echo $row["dateOut"]; ?></td>
+                        </tr>
+                    <?php
+                    } else {
+                    ?>
 
-                    <tr>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["day"]; ?></td>
-                        <td><?php echo $row["nPeople"]; ?></td>
-                        <td><?php echo $row["price"] * $row["nPeople"] . "€"; ?></td>
-                        <td><a class="btn btn-danger" onclick="DeleteConfirm()" href="deleteActivity.php?id=<?php echo $row['id_booking']; ?>">X</a></td>
-                    </tr>
+                        <tr>
+                            <td><?php echo $row["id_booking"]; ?></td>
+                            <td><?php echo $row["id_room"]; ?></td>
+                            <td><?php echo $row["dateIn"]; ?></td>
+                            <td><?php echo $row["dateOut"]; ?></td>
+                        </tr>
 
                 <?php
+                    }
                 }
                 ?>
             </tbody>
