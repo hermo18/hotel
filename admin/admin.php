@@ -30,7 +30,7 @@ session_start();
     <br>
     <br>
     <br>
-    <a href="#"><i class="bi- bi-people"></i> USERS</a>
+    <a href="users.php"><i class="bi- bi-people"></i> USERS</a>
     <a href="rooms.php">ROOMS</a>
     <a href="food.php">FOOD</a>
     <a href="create.php">CREATE</a>
@@ -60,7 +60,7 @@ session_start();
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">USERS</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="users.php" class="btn btn-primary">Go</a>
           </div>
         </div>
       </div>
@@ -68,15 +68,15 @@ session_start();
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">ROOMS</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="rooms.php" class="btn btn-primary">Go</a>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">ROOMS</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">FOOD</h5>
+            <a href="food.php" class="btn btn-primary">Go</a>
           </div>
         </div>
       </div>
@@ -86,16 +86,16 @@ session_start();
       <div class="col-sm-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">USERS</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">CREATE</h5>
+            <a href="create.php" class="btn btn-primary">Go</a>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">ROOMS</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">PROFILE</h5>
+            <a href="profile.php" class="btn btn-primary">Go</a>
           </div>
         </div>
       </div>
