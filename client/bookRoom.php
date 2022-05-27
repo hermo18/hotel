@@ -69,6 +69,8 @@ session_start();
             $dateB = strtotime($_POST["dateBook"]);
             $dateE = strtotime($_POST["dateEnd"]);
             $beds = $_POST["beds"];
+
+
             if ($dateB > $dateE) {
                 echo "<script>alert('NOT VALID DATE');
                 location='roomClient.php.php';
@@ -77,6 +79,11 @@ session_start();
             $days = ($dateB - $dateE) / 86400;
             $days = abs($days);
             $days = floor($days);
+
+            $_SESSION["dateB"]=$_POST["dateBook"];
+            $_SESSION["dateE"]=$_POST["dateEnd"];
+            $_SESSION["beds"]=$beds;
+            $_SESSION["days"]=$days;
 
             require("../db/db.php");
             $dbh = conectar("hotel", "root", "");
@@ -87,46 +94,55 @@ session_start();
             where t.id_type=? and r.n_beds=? AND r.id_room NOT IN (select id_room from booking_room where dateIn=?) order by r.price asc limit 10");
             $stmt->bindParam(1, $typeRoom);
             $stmt->bindParam(2, $beds);
-            $stmt->bindParam(3, $dateB);
+            $stmt->bindParam(3, $_POST["dateBook"]);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $stmt->execute();
-            ?>
+        ?>
 
             <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">TYPE</th>
-                    <th scope="col">NUM BEDS</th>
-                    <th scope="col">PRICE</th>
-                    <th scope="col">TOTAL PRICE</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-
-                while ($row = $stmt->fetch()) {
-                ?>
-
+                <thead>
                     <tr>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["n_beds"]; ?></td>
-                        <td><?php echo $row["price"]; ?></td>
-                        <td><?php echo $row["price"]*$days; ?></td>
-                        <td><a class="btn btn-success" href="bookRoom.php?id=<?php echo $row['id_room']; ?>">PAY</a></td>
+                        <th scope="col">ROOM</th>
+                        <th scope="col">NUM BEDS</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">TOTAL PRICE</th>
                     </tr>
+                </thead>
+                <tbody>
+                    <?php
 
-                <?php
-                }
-                ?>
-            </tbody>
-        </table>
-        <?php
-        if(isset($_GET['id_room'])){
-            $stmt = $dbh->prepare("insert into ");
-        }
+                    while ($row = $stmt->fetch()) {
+                    ?>
 
-        desconectar($dbh);
-        ?>
+                        <tr>
+                            <td><?php echo $row["id_room"]; ?></td>
+                            <td><?php echo $row["n_beds"]; ?></td>
+                            <td><?php echo $row["price"]; ?></td>
+                            <td><?php echo $row["price"] * $days; ?></td>
+                            <td><a class="btn btn-success" href="payRoom.php?id=<?php echo $row['id_room']; ?>">PAY</a></td>
+                        </tr>
+
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+
+            if (isset($_GET['id_room'])) {
+                $stmt2 = $dbh->prepare("insert into booking_room (id_user, id_room, dateOut, dateIn, days) values (?,?,?,?,?)");
+                $stmt2->bindParam(1, $_SESSION["id"]);
+                $stmt2->bindParam(2, $_GET['id_room']);
+                $stmt2->bindParam(3, $dateE);
+                $stmt2->bindParam(4, $dateB);
+                $stmt2->bindParam(5, $days);
+                $stmt->execute();
+                echo "<script>alert('BOOK COMPLETE');
+                location='roomClient.php';
+                </script>";
+            }
+            desconectar($dbh);
+            ?>
             <!-- <div style="width: 50%; margin: auto;">
                 <form action="registerUser.php" method="post">
                     <div class="form-group">
