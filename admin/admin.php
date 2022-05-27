@@ -31,7 +31,7 @@ session_start();
     <br>
     <br>
     <a href="#"><i class="bi- bi-people"></i> USERS</a>
-    <a href="#">ROOMS</a>
+    <a href="rooms.php">ROOMS</a>
     <a href="food.php">FOOD</a>
     <a href="create.php">CREATE</a>
     <a href="profile.php">PROFILE</a>

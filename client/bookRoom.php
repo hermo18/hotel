@@ -142,37 +142,6 @@ session_start();
                 </script>";
             }
             desconectar($dbh);
-            ?>
-            <!-- <div style="width: 50%; margin: auto;">
-                <form action="registerUser.php" method="post">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email" name="email" required>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="form-group col-sm">
-                            <input type="text" class="form-control" name="first_name" placeholder="First name" required>
-                        </div>
-                        <div class="form-group col-sm">
-                            <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="dni" placeholder="DNI" minlength="9" maxlength="9" required>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="phone" placeholder="Phone" minlength="9" maxlength="9" required>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" minlength="6" maxlength="15" required>
-                    </div>
-            </div> -->
-        <?php
-
-
         }
 
         if (isset($_SESSION['user'])) {

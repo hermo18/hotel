@@ -33,7 +33,7 @@ session_start();
             <br>
             <br>
             <a href="#"><i class="bi- bi-people"></i> USERS</a>
-            <a href="#">ROOMS</a>
+            <a href="rooms.php">ROOMS</a>
             <b><a href="food.php">FOOD</a></b>
             <a href="create.php">CREATE</a>
             <a href="profile.php">PROFILE</a>
