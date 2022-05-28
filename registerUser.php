@@ -30,6 +30,8 @@ session_start();
             $stmt2->setFetchMode(PDO::FETCH_ASSOC);
             $stmt2->execute();
 
+            $passHash=password_hash($_POST["password"], PASSWORD_DEFAULT);
+
             if (($row = $stmt->fetch())!=0 || ($row2 = $stmt2->fetch())!=0)
                 if ($_SESSION["type"]==1) {
                     echo "<script>alert('EMAIL OR DNI NOT VALID'); location='admin/create.php';</script>";
@@ -42,7 +44,7 @@ session_start();
                 $stmt->bindParam(3, $_POST["email"]);
                 $stmt->bindParam(4, $_POST["phone"]);
                 $stmt->bindParam(5, $_POST["dni"]);
-                $stmt->bindParam(6, $_POST["password"]);
+                $stmt->bindParam(6, $passHash);
                 $stmt->bindParam(7, $_POST["type"]);
                 $stmt->execute();
 
@@ -62,6 +64,8 @@ session_start();
             $stmt2->setFetchMode(PDO::FETCH_ASSOC);
             $stmt2->execute();
 
+            $passHash=password_hash($_POST["password"], PASSWORD_DEFAULT);
+
             if (($row = $stmt->fetch())!=0 || ($row2 = $stmt2->fetch())!=0)
                 echo "<script>alert('EMAIL OR DNI NOT VALID'); location='login.php';</script>";
             else{
@@ -71,7 +75,7 @@ session_start();
                 $stmt->bindParam(3, $_POST["email"]);
                 $stmt->bindParam(4, $_POST["phone"]);
                 $stmt->bindParam(5, $_POST["dni"]);
-                $stmt->bindParam(6, $_POST["password"]);
+                $stmt->bindParam(6, $passHash);
                 $stmt->execute();
 
                 echo "<script>alert('YOUR ACCOUNT HAS BEEN CREATED'); location='login.php';</script>";

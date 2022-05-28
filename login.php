@@ -135,15 +135,14 @@ session_start();
         $stmt->execute();
 
         if (($row = $stmt->fetch()) == 0) {
-            echo "<script>alert('NOMBRE DE USUARIO O CONTRASEÑA NO VALIDO')</script>";
+            echo "<script>alert('INVALID USERNAME OR PASSWORD')</script>";
         } else {
-            echo "entra";
             $stmt = $dbh->prepare("select * from users where email=?");
             $stmt->bindParam(1, $_POST["user"]);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                if ($_POST["pass"] == $row["password"]) {
+                if (password_verify($_POST["pass"], $row["password"])) {
                     $_SESSION["user"] = $_POST["user"];
                     $_SESSION["type"] = $row["type_user"];
                     $_SESSION["id"] = $row["id_user"];
